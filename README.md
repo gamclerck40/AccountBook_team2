@@ -39,8 +39,7 @@ node_modules/
 # Docker 관련 파일 제외 (사용할 경우)
 docker-compose.override.yml
 
-### 성현의 브랜치
-## SH 브랜치 입니다
-# 살아있는지 확인
 
 ### 추가 모듈 uv pip install pillow
+### dateil.html 구성 및 구현 테스트 완료 
+### list.html 즉 기본 화면 구성 및 테스트 완료 
