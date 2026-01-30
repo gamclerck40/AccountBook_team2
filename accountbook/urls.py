@@ -15,18 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include,path
+from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('shop/', include('shop.urls')),
+    path("shop/" , include("shop.urls")),
 ]
 
+
+# ✅ 개발 모드에서 미디어 파일을 서빙하기 위한 설정
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
-=======
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
 # Admin 관리자 '웹사이트를 생성하고 관리할 수 있게 해주는 기능'
 # DB모델 데이터를 시각적으로 편리하게 추가/편집/삭제할 수 있는 기능 제공.
 # from django.conf.urls.static import static
@@ -44,4 +48,5 @@ if settings.DEBUG:
 #     # http://127.0.0.1:8001/shop shop호출.
 
 #     ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
