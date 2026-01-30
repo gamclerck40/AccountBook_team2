@@ -127,3 +127,6 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # 배포용(지금 당장은 없어도 됨, 하지만 나중에 꼭 필요)
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
