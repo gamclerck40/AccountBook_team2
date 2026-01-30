@@ -60,23 +60,40 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+   
+def product_image_upload_to(instance, filename):
+    # product_id는 Product가 저장된 뒤에 생김 (admin inline이면 문제 없음)
+    return f"products/{instance.product_id}/{filename}"
+
 class Product(models.Model):
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.CASCADE,
-        related_name="products"
-    ) 
-    name = models.CharField(max_length=120) 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products")
+    name = models.CharField(max_length=120)
     price = models.DecimalField(max_digits=14, decimal_places=0, validators=[MinValueValidator(1)])
     description = models.TextField(blank=True)
     stock = models.PositiveIntegerField(default=0)
-    #어드민에서 이미지를 추가 할 수 있게 해줌,png,jpg,jpeg,gif,webp,tiff,bmp 등 bmp는 비추천 용량 이슈 pdf,mp4는 불가능 
-    image = models.ImageField(upload_to='products/', null=True, blank=True)
-    #이미지 필드를 사용하려면 pillow는 필수
+#     #어드민에서 이미지를 추가 할 수 있게 해줌,png,jpg,jpeg,gif,webp,tiff,bmp 등 bmp는 비추천 용량 이슈 pdf,mp4는 불가능 
+#     image = models.ImageField(upload_to='products/', null=True, blank=True)
+#     #이미지 필드를 사용하려면 pillow는 필수
 
+
+# =======
+#     main_image = models.ImageField(upload_to="products/main/", blank=True, null=True)
+    def __str__(self):
+        return self.name
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name="images", on_delete=models.CASCADE)
+    # ✅ upload_to는 함수 사용
+    image = models.ImageField(upload_to=product_image_upload_to)
+
+    sort_order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering = ["sort_order", "id"]
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.product.name} - {self.sort_order}"
+    
 # MyPage 내 정보 확인에서 접속하는 거래내역, 계좌정보 확인 등
 class Transaction(models.Model):
 	  # 계좌 선택 -> 원하는 금액만큼 Account.balance 추가.

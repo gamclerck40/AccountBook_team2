@@ -117,6 +117,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR ,"static")]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-#html에서 미디어 파일을 보여줄때의 별도 경로
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
